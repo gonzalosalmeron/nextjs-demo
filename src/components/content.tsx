@@ -6,7 +6,7 @@ import useWeather from '@/hooks/use-weather'
 
 import CurrentPrecipitations from '@/components/widgets/current-precipitations'
 import CurrentWindSpeed from '@/components/widgets/current-wind-speed'
-import TodaysTemperatures from '@/components/widgets/todays-temperatures'
+import TodaysForecast from '@/components/widgets/todays-forecast'
 
 export default function Content() {
   const [city] = useState<{
@@ -37,7 +37,7 @@ export default function Content() {
           </h1>
 
           <div className='py-10'>
-            <TodaysTemperatures weather={weather} />
+            <TodaysForecast weather={weather} />
             <div className='mt-6 grid grid-cols-2 gap-6'>
               <CurrentWindSpeed weather={weather} />
               <CurrentPrecipitations weather={weather} />

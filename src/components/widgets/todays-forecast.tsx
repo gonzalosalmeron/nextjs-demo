@@ -4,11 +4,7 @@ import Card from '@/components/ui/card'
 
 import { WeatherData } from '@/types/weather'
 
-export default function TodaysTemperatures({
-  weather,
-}: {
-  weather: WeatherData
-}) {
+export default function TodaysForecast({ weather }: { weather: WeatherData }) {
   return (
     <Card icon={<ClockIcon className='h-4 w-4' />} title='Hourly forecast'>
       <div className='flex gap-4 overflow-x-auto'>
