@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 
+import dynamic from 'next/dynamic'
+
 import useWeather from '@/hooks/use-weather'
 
 import ChartHumidity from '@/components/widgets/chart-humidity'
@@ -9,6 +11,10 @@ import ChartTemperatures from '@/components/widgets/chart-temperatures'
 import CurrentPrecipitations from '@/components/widgets/current-precipitations'
 import CurrentWindSpeed from '@/components/widgets/current-wind-speed'
 import TodaysForecast from '@/components/widgets/todays-forecast'
+
+const DynamicPastForecast = dynamic(() => import('./widgets/past-forecast'), {
+  ssr: false,
+})
 
 export default function Content() {
   const [city] = useState<{
@@ -32,12 +38,10 @@ export default function Content() {
               <span className='h-2 w-2 shrink-0 animate-ping rounded-full bg-green-400' />
             </span>
           </p>
-
           <h1 className='text-7xl'>
             {weather?.current?.cloud_cover < 50 ? 'Sunny' : 'Cloudy'} <br />
             weather in Málaga
           </h1>
-
           <div className='py-10'>
             <TodaysForecast weather={weather} />
             <div className='mt-6 grid grid-cols-2 gap-6'>
@@ -47,6 +51,8 @@ export default function Content() {
               <ChartHumidity weather={weather} />
             </div>
           </div>
+
+          <DynamicPastForecast />
         </div>
         {/* END LEFT PART */}
 
