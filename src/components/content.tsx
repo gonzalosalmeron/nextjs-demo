@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 
+import Card from './ui/card'
+import { MapPinIcon } from '@heroicons/react/24/outline'
 import dynamic from 'next/dynamic'
 
 import useWeather from '@/hooks/use-weather'
@@ -14,6 +16,15 @@ import TodaysForecast from '@/components/widgets/todays-forecast'
 
 const DynamicPastForecast = dynamic(() => import('./widgets/past-forecast'), {
   ssr: false,
+})
+
+const LazyMap = dynamic(() => import('@/components/widgets/map'), {
+  ssr: false,
+  loading: () => (
+    <Card icon={<MapPinIcon className='h-4 w-4' />} title='Location'>
+      Getting map...
+    </Card>
+  ),
 })
 
 export default function Content() {
@@ -57,7 +68,11 @@ export default function Content() {
         {/* END LEFT PART */}
 
         {/* RIGHT */}
-        <div className='aspect-square min-w-96 bg-secondary-foreground'></div>
+        <div className='aspect-square min-w-96'>
+          <div className='sticky top-10'>
+            <LazyMap />
+          </div>
+        </div>
         {/* END RIGHT PART */}
       </div>
     </>
