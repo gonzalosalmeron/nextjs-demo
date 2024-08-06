@@ -4,6 +4,8 @@ import { useState } from 'react'
 
 import useWeather from '@/hooks/use-weather'
 
+import ChartHumidity from '@/components/widgets/chart-humidity'
+import ChartTemperatures from '@/components/widgets/chart-temperatures'
 import CurrentPrecipitations from '@/components/widgets/current-precipitations'
 import CurrentWindSpeed from '@/components/widgets/current-wind-speed'
 import TodaysForecast from '@/components/widgets/todays-forecast'
@@ -41,6 +43,8 @@ export default function Content() {
             <div className='mt-6 grid grid-cols-2 gap-6'>
               <CurrentWindSpeed weather={weather} />
               <CurrentPrecipitations weather={weather} />
+              <ChartTemperatures weather={weather} />
+              <ChartHumidity weather={weather} />
             </div>
           </div>
         </div>

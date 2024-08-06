@@ -494,3 +494,25 @@ export const SvgCompass = ({
     </svg>
   </div>
 )
+
+export const SvgTemperature = (props: React.ComponentProps<'svg'>) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    width={800}
+    height={800}
+    fill='none'
+    viewBox='0 0 24 24'
+    {...props}
+  >
+    <path
+      fill='currentColor'
+      d='M13.5 13.8H13c0 .2.1.4.3.5l.2-.5Zm-3 0 .2.5c.2 0 .3-.3.3-.5h-.5ZM13 6v7.8h1V6h-1Zm-1-1c.6 0 1 .4 1 1h1a2 2 0 0 0-2-2v1Zm-1 1c0-.6.4-1 1-1V4a2 2 0 0 0-2 2h1Zm0 7.8V6h-1v7.8h1ZM9 17a3 3 0 0 1 1.7-2.7l-.4-1A4 4 0 0 0 8 17h1Zm3 3a3 3 0 0 1-3-3H8a4 4 0 0 0 4 4v-1Zm3-3a3 3 0 0 1-3 3v1a4 4 0 0 0 4-4h-1Zm-1.7-2.7A3 3 0 0 1 15 17h1c0-1.6-1-3-2.3-3.6l-.4.9Z'
+    />
+    <path
+      stroke='currentColor'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M12 17.5v-2m3.5-3h2m-2-2h2m-2-2h2m-2-2h4'
+    />
+  </svg>
+)
