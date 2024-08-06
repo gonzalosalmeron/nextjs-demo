@@ -1,6 +1,7 @@
 import { NextAuthConfig } from 'next-auth'
 
 export default {
+  trustHost: true,
   session: {
     strategy: 'jwt',
     maxAge: 6 * 24 * 60 * 60, // 6 days
