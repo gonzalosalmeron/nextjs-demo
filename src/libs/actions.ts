@@ -3,7 +3,7 @@
 import prisma from './db'
 import { hashPassword } from './hash'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
-import { signIn } from 'auth'
+import { auth, signIn } from 'auth'
 import { isRedirectError } from 'next/dist/client/components/redirect'
 import { ZodError, ZodSchema, z } from 'zod'
 
@@ -53,7 +53,7 @@ export const authenticateCredentials = async (
   try {
     await signIn('credentials', {
       ...validate.data,
-      redirectTo: '/',
+      redirectTo: '/dashboard',
     })
   } catch (error) {
     if (isRedirectError(error)) throw error
@@ -115,7 +115,7 @@ export const registerWithCredentials = async (
     await signIn('credentials', {
       email: email as string,
       password: newPass as string,
-      redirectTo: '/',
+      redirectTo: '/dashboard',
     })
 
     return {
@@ -156,4 +156,10 @@ export const validateFormData = async (
     }
     return { result: 'error', errors: {} }
   }
+}
+
+export const getCurrentUser = async () => {
+  const session = await auth()
+
+  return session?.user
 }

@@ -1,7 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,17 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={(inter.className, 'px-4')}>
-        <Image
-          src='/logo.avif'
-          alt='Weather Query'
-          width={40}
-          height={40}
-          className='fixed left-4 top-4 rounded-lg sm:left-10'
-          priority={true}
-        />
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
