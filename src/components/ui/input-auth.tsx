@@ -9,6 +9,7 @@ export default function InputAuth({
   defaultValue,
   autoComplete,
   error,
+  ...props
 }: props) {
   return (
     <label className='flex flex-col gap-1 text-sm'>
@@ -19,6 +20,7 @@ export default function InputAuth({
         className='rounded-lg border bg-secondary px-4 py-2 text-base outline-none focus:border-primary'
         defaultValue={defaultValue}
         autoComplete={autoComplete}
+        {...props}
       />
       {error && <span className='text-xs text-red-500'>{error}</span>}
     </label>

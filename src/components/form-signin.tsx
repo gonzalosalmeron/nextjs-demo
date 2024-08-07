@@ -29,6 +29,7 @@ export default function FormSignIn() {
         name='email'
         autoComplete='username'
         error={state?.errors?.email}
+        data-cy='input-email'
       />
       <InputAuth
         label='Password'
