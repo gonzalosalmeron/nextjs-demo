@@ -16,7 +16,9 @@ export default async function CurrentUser() {
       <form
         action={async () => {
           'use server'
-          await signOut()
+          await signOut({
+            redirectTo: '/auth/signin',
+          })
         }}
         className='flex items-center'
       >
