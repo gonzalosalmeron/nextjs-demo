@@ -37,28 +37,24 @@ export default function FormSignUp() {
         type='text'
         name='name'
         error={state?.errors?.name}
-        defaultValue='gonzalo'
       />
       <InputAuth
         label='Email'
         type='email'
         name='email'
         error={state?.errors?.email}
-        defaultValue='gonzalo@gmail.com'
       />
       <InputAuth
         label='Password'
         type='password'
         name='newPass'
         error={state?.errors?.newPass}
-        defaultValue='secret'
       />
       <InputAuth
         label='Repeat password'
         type='password'
         name='repeatPass'
         error={state?.errors?.repeatPass}
-        defaultValue='secret'
       />
 
       <BtnSubmit>Register</BtnSubmit>
