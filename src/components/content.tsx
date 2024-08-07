@@ -10,9 +10,12 @@ import useWeather from '@/hooks/use-weather'
 
 import ChartHumidity from '@/components/widgets/chart-humidity'
 import ChartTemperatures from '@/components/widgets/chart-temperatures'
+import CitySearch from '@/components/widgets/city-search'
 import CurrentPrecipitations from '@/components/widgets/current-precipitations'
 import CurrentWindSpeed from '@/components/widgets/current-wind-speed'
 import TodaysForecast from '@/components/widgets/todays-forecast'
+
+import { City } from '@/types'
 
 const DynamicPastForecast = dynamic(() => import('./widgets/past-forecast'), {
   ssr: false,
@@ -28,10 +31,7 @@ const LazyMap = dynamic(() => import('@/components/widgets/map'), {
 })
 
 export default function Content() {
-  const [city] = useState<{
-    name: string
-    coordinates: { lat: number; long: number }
-  }>({
+  const [city, setCity] = useState<City>({
     name: 'Málaga',
     coordinates: { lat: 36.72, long: -4.42 },
   })
@@ -51,7 +51,7 @@ export default function Content() {
           </p>
           <h1 className='text-7xl'>
             {weather?.current?.cloud_cover < 50 ? 'Sunny' : 'Cloudy'} <br />
-            weather in Málaga
+            weather in {city.name}
           </h1>
           <div className='py-10'>
             <TodaysForecast weather={weather} />
@@ -68,9 +68,12 @@ export default function Content() {
         {/* END LEFT PART */}
 
         {/* RIGHT */}
-        <div className='aspect-square min-w-96'>
-          <div className='sticky top-10'>
-            <LazyMap />
+        <div className='w-full max-w-xs shrink-0'>
+          <div className='sticky top-10 flex flex-col gap-6'>
+            <CitySearch city={city} setCity={setCity} />
+            <LazyMap
+              coordinates={[city.coordinates.lat, city.coordinates.long]}
+            />
           </div>
         </div>
         {/* END RIGHT PART */}
