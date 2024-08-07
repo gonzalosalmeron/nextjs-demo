@@ -12,6 +12,7 @@ export default function SwitchTheme() {
       className='group flex h-full w-full items-center justify-center rounded-xl duration-150 active:scale-90'
       onClick={toggleTheme}
       aria-label={`Theme switch, now: ${theme}`}
+      data-cy='btn-switch-theme'
     >
       <ElementIcon className='h-5 w-5' />
     </button>
