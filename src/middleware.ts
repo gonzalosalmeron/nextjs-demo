@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 
 const { auth } = NextAuth(authConfig)
 
-const apiAuthPrefixUrls = ['/auth/signin', 'auth/signup']
+const apiAuthPrefixUrls = ['/auth/signin', '/auth/signup']
 const protectedUrl = '/dashboard'
 
 export default auth((req) => {
@@ -12,6 +12,8 @@ export default auth((req) => {
   const isLoggedIn = !!auth
 
   const isAuthUrl = apiAuthPrefixUrls.includes(nextUrl.pathname)
+  if (nextUrl.pathname === '/')
+    return NextResponse.redirect(new URL(protectedUrl, nextUrl))
   if (isAuthUrl && isLoggedIn)
     return NextResponse.redirect(new URL(protectedUrl, nextUrl))
   if (nextUrl.pathname.includes(protectedUrl) && !isLoggedIn)
