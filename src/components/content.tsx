@@ -6,7 +6,7 @@ import Card from './ui/card'
 import { MapPinIcon } from '@heroicons/react/24/outline'
 import dynamic from 'next/dynamic'
 
-import useWeather from '@/hooks/use-weather'
+import { useFetcher } from '@/hooks/use-fetcher'
 
 import ChartHumidity from '@/components/widgets/chart-humidity'
 import ChartTemperatures from '@/components/widgets/chart-temperatures'
@@ -16,6 +16,7 @@ import CurrentWindSpeed from '@/components/widgets/current-wind-speed'
 import TodaysForecast from '@/components/widgets/todays-forecast'
 
 import { City } from '@/types'
+import { WeatherData } from '@/types/weather'
 
 const DynamicPastForecast = dynamic(() => import('./widgets/past-forecast'), {
   ssr: false,
@@ -30,12 +31,19 @@ const LazyMap = dynamic(() => import('@/components/widgets/map'), {
   ),
 })
 
+const urlParams = (coordinates: { lat: number; long: number }) =>
+  `?latitude=${coordinates.lat}&longitude=${coordinates.long}&current=temperature_2m,relative_humidity_2m,is_day,precipitation,rain,cloud_cover,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,relative_humidity_2m,rain`
 export default function Content() {
   const [city, setCity] = useState<City>({
     name: 'Málaga',
     coordinates: { lat: 36.72, long: -4.42 },
   })
-  const weather = useWeather({ coordinates: city.coordinates })
+
+  const { data } = useFetcher(
+    `${process.env.NEXT_PUBLIC_OPENM_API_URL}/forecast${urlParams(city.coordinates)}`
+  )
+
+  const weather = data as WeatherData
 
   if (!weather) return null
   return (

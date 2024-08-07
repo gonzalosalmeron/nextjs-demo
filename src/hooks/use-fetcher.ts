@@ -13,6 +13,7 @@ export const useFetcher = <T>(url: string, options: UseFetcherOptions = {}) => {
 
   const fetchData = useCallback(async () => {
     setLoading(true)
+    setError(null)
     try {
       const response = await fetch(url)
       if (!response.ok) {
@@ -38,6 +39,7 @@ export const useFetcher = <T>(url: string, options: UseFetcherOptions = {}) => {
 
   useEffect(() => {
     // get from cache or call to api
+    setError(null)
     const cachedData = localStorage.getItem(url)
     if (cachedData) {
       const { data: cachedDataValue, timestamp } = JSON.parse(cachedData)
