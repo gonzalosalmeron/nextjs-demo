@@ -24,14 +24,19 @@
   --secondary-foreground: 0 0% 98%;
 }
 
-/* @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-} */
+.ikea {
+  --background: 48 100% 50%;
+  --foreground: 0 0% 9%;
+
+  --primary: 218 100% 37%;
+  --primary-foreground: 0 0% 98%;
+
+  --secondary: 0 0% 96.1%;
+  --secondary-foreground: 0 0% 9%;
+}
 
 @layer base {
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-primary;
   }
 }
