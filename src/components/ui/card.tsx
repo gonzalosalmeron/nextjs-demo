@@ -1,14 +1,19 @@
+import { CardSkeleton } from './skeletons'
+
 export default function Card({
   icon,
   title,
   children,
   description,
+  loading = false,
 }: {
   icon: React.ReactNode
   title: string
   children: React.ReactNode
   description?: string
+  loading?: boolean
 }) {
+  if (loading) return <CardSkeleton />
   return (
     <div className='flex w-full flex-col justify-between rounded-lg border bg-primary-foreground p-4'>
       <header className='flex items-center gap-1 text-secondary-foreground'>

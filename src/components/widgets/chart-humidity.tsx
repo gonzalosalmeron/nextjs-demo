@@ -5,11 +5,18 @@ import Card from '@/components/ui/card'
 
 import { WeatherData } from '@/types/weather'
 
-export default function ChartHumidity({ weather }: { weather: WeatherData }) {
+export default function ChartHumidity({
+  weather,
+  loading,
+}: {
+  weather: WeatherData | null
+  loading: boolean
+}) {
   return (
     <Card
       icon={<SvgTemperature className='h-5 w-5' />}
       title='Humedity next 6 days'
+      loading={loading}
     >
       <ChartLines
         data={{
@@ -18,7 +25,7 @@ export default function ChartHumidity({ weather }: { weather: WeatherData }) {
           ),
           datasets: [
             {
-              data: weather?.hourly.relative_humidity_2m,
+              data: weather?.hourly.relative_humidity_2m ?? [],
               label: 'Humidity %',
               backgroundColor: '#D81C5D80',
               borderColor: '#D81C5D',

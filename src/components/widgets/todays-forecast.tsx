@@ -4,9 +4,19 @@ import Card from '@/components/ui/card'
 
 import { WeatherData } from '@/types/weather'
 
-export default function TodaysForecast({ weather }: { weather: WeatherData }) {
+export default function TodaysForecast({
+  weather,
+  loading,
+}: {
+  weather: WeatherData | null
+  loading: boolean
+}) {
   return (
-    <Card icon={<ClockIcon className='h-4 w-4' />} title='Hourly forecast'>
+    <Card
+      icon={<ClockIcon className='h-4 w-4' />}
+      title='Hourly forecast'
+      loading={loading}
+    >
       <div className='flex gap-4 overflow-x-auto'>
         {weather?.hourly?.time?.map((value: string, index: number) => (
           <div

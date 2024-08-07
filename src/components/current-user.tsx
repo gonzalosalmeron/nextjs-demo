@@ -20,7 +20,7 @@ export default async function CurrentUser() {
         }}
         className='flex items-center'
       >
-        <button>
+        <button aria-label='Logout user'>
           <ArrowRightStartOnRectangleIcon className='h-5 w-5' />
         </button>
       </form>

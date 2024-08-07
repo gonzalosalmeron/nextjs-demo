@@ -5,10 +5,12 @@ import { WeatherData } from '@/types/weather'
 
 export default function CurrentPrecipitations({
   weather,
+  loading,
 }: {
-  weather: WeatherData
+  weather: WeatherData | null
+  loading?: boolean
 }) {
-  const precipitation = weather?.current?.precipitation
+  const precipitation = weather?.current?.precipitation ?? 0
   const description = () => {
     if (precipitation < 0.1)
       return 'No precipitation. The sky is so dry, even the clouds need a drink!'
@@ -24,6 +26,7 @@ export default function CurrentPrecipitations({
       icon={<SvgWaterDrop className='h-4 w-4' />}
       title='Precipitations'
       description={description()}
+      loading={loading}
     >
       <p className='text-center text-lg font-medium'>
         {precipitation?.toFixed(1) ?? '--'}

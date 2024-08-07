@@ -5,8 +5,10 @@ import { WeatherData } from '@/types/weather'
 
 export default function CurrentWindSpeed({
   weather,
+  loading,
 }: {
-  weather: WeatherData
+  weather: WeatherData | null
+  loading?: boolean
 }) {
   const speed = weather?.current?.wind_speed_10m ?? 0
   const speedUnits = weather?.current_units?.wind_speed_10m ?? 'km/h'
@@ -26,6 +28,7 @@ export default function CurrentWindSpeed({
       icon={<SvgWindSpeed className='h-4 w-4' />}
       title='Wind Speed'
       description={description()}
+      loading={loading}
     >
       <div className='flex items-center justify-center'>
         <SvgCompass deg={direction} className='h-28 w-28' />

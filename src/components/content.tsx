@@ -2,14 +2,11 @@
 
 import { useState } from 'react'
 
-import Card from './ui/card'
-import { MapPinIcon } from '@heroicons/react/24/outline'
+import { CardSkeleton } from './ui/skeletons'
 import dynamic from 'next/dynamic'
 
 import { useFetcher } from '@/hooks/use-fetcher'
 
-import ChartHumidity from '@/components/widgets/chart-humidity'
-import ChartTemperatures from '@/components/widgets/chart-temperatures'
 import CitySearch from '@/components/widgets/city-search'
 import CurrentPrecipitations from '@/components/widgets/current-precipitations'
 import CurrentWindSpeed from '@/components/widgets/current-wind-speed'
@@ -21,15 +18,24 @@ import { WeatherData } from '@/types/weather'
 const DynamicPastForecast = dynamic(() => import('./widgets/past-forecast'), {
   ssr: false,
 })
-
 const LazyMap = dynamic(() => import('@/components/widgets/map'), {
   ssr: false,
-  loading: () => (
-    <Card icon={<MapPinIcon className='h-4 w-4' />} title='Location'>
-      Getting map...
-    </Card>
-  ),
+  loading: () => <CardSkeleton />,
 })
+const LazyChartTemperatures = dynamic(
+  () => import('@/components/widgets/chart-temperatures'),
+  {
+    ssr: false,
+    loading: () => <CardSkeleton />,
+  }
+)
+const LazyChartHumidity = dynamic(
+  () => import('@/components/widgets/chart-humidity'),
+  {
+    ssr: false,
+    loading: () => <CardSkeleton />,
+  }
+)
 
 const urlParams = (coordinates: { lat: number; long: number }) =>
   `?latitude=${coordinates.lat}&longitude=${coordinates.long}&current=temperature_2m,relative_humidity_2m,is_day,precipitation,rain,cloud_cover,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,relative_humidity_2m,rain`
@@ -39,13 +45,13 @@ export default function Content() {
     coordinates: { lat: 36.72, long: -4.42 },
   })
 
-  const { data } = useFetcher(
+  const { data: weather, loading } = useFetcher<WeatherData>(
     `${process.env.NEXT_PUBLIC_OPENM_API_URL}/forecast${urlParams(city.coordinates)}`
   )
 
-  const weather = data as WeatherData
+  // const weather = data as WeatherData
+  // const weather = localData as WeatherData
 
-  if (!weather) return null
   return (
     <>
       <div className='mx-auto flex w-full max-w-7xl justify-between gap-10 py-10'>
@@ -58,16 +64,27 @@ export default function Content() {
             </span>
           </p>
           <h1 className='text-7xl'>
-            {weather?.current?.cloud_cover < 50 ? 'Sunny' : 'Cloudy'} <br />
+            {!weather
+              ? 'Loading'
+              : weather?.current?.cloud_cover < 50
+                ? 'Sunny'
+                : 'Cloudy'}{' '}
+            <br />
             weather in {city.name}
           </h1>
           <div className='py-10'>
-            <TodaysForecast weather={weather} />
+            <TodaysForecast weather={weather} loading={!weather || loading} />
             <div className='mt-6 grid grid-cols-2 gap-6'>
               <CurrentWindSpeed weather={weather} />
               <CurrentPrecipitations weather={weather} />
-              <ChartTemperatures weather={weather} />
-              <ChartHumidity weather={weather} />
+              <LazyChartTemperatures
+                weather={weather}
+                loading={!weather || loading}
+              />
+              <LazyChartHumidity
+                weather={weather}
+                loading={!weather || loading}
+              />
             </div>
           </div>
 
