@@ -6,7 +6,7 @@ import { getCurrentUser } from '@/libs/actions'
 export default async function CurrentUser() {
   const user = await getCurrentUser()
   return (
-    <div className='flex items-center gap-2 pl-2.5'>
+    <div className='flex shrink-0 items-center gap-2 pl-2.5'>
       <p>Welcome, {user?.name}</p>
       <div className='flex aspect-square w-7 items-center justify-center rounded-full bg-foreground'>
         <p className='text-sm uppercase text-secondary'>
