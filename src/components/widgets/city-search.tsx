@@ -74,7 +74,7 @@ export default function CitySearch({
       {isOpen && (
         <div className='absolute z-[9999999] mt-2 max-h-96 w-full overflow-y-auto rounded-lg border border-gray-100 bg-background py-2'>
           {loading && !error ? (
-            <p>Loading...</p>
+            <p className='px-4 text-sm text-secondary-foreground'>Loading...</p>
           ) : (
             <>
               {data && data?.length > 0 ? (
